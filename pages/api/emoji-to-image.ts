@@ -33,6 +33,15 @@ export default async function handler(
         : chromePath,
     headless: process.env.NODE_ENV === "production" ? chromium.headless : true,
     ignoreHTTPSErrors: true,
+    args: [
+      "--disable-gpu",
+      "--disable-dev-shm-usage",
+      "--disable-setuid-sandbox",
+      "--no-first-run",
+      "--no-sandbox",
+      "--no-zygote",
+      "--single-process",
+    ],
   });
 
   // Navigate a new browser page to the layout page
