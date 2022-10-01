@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { useFfmpeg } from "../context/ffmpeg";
@@ -11,6 +11,12 @@ export default function AlbumArt() {
   const [result, setResult] = useState("");
   const [progress, setProgress] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const makeVideo = async () => {
     if (loading || !file) return;
@@ -18,9 +24,11 @@ export default function AlbumArt() {
       ffmpeg,
       `${HOST_URL}/api/audio?url=${url}`,
       setProgress,
+      setIsLoading,
       file
     );
     setResult(result_video_url);
+    scrollToBottom();
   };
 
   const download = () => {
@@ -62,7 +70,7 @@ export default function AlbumArt() {
       >
         {progress ? `Converting ${progress}` : "📀 Generate video"}
       </Button>
-      <p className="opacity-50">{`Conversion doesn't need internet`}</p>
+      <p className="opacity-50 text-sm">{`Conversion doesn't need internet`}</p>
 
       {result && (
         <>
@@ -70,9 +78,10 @@ export default function AlbumArt() {
             src={result}
             controls
             className="mx-auto w-full lg:w-96"
-            style={{ maxWidth: "500px" }}
+            autoPlay
           />
           <Button onClick={download}>Download</Button>
+          <div ref={ref} />
         </>
       )}
     </div>

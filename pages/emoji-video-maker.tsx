@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { useFfmpeg } from "../context/ffmpeg";
@@ -13,17 +13,26 @@ export default function EmojiArt() {
   const [color, setColor] = useState("#ffffff");
   const [emoji, setEmoji] = useState("");
   const [progress, setProgress] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const makeVideo = async () => {
     if (loading) return;
+    setIsLoading(true);
     const result_video_url = await generateVideo(
       ffmpeg,
       `${HOST_URL}/api/audio?url=${url}`,
       setProgress,
+      setIsLoading,
       undefined,
       `${emoji}~${color.slice(1)}`
     );
     setResult(result_video_url);
+    scrollToBottom();
   };
 
   const download = () => {
@@ -59,17 +68,21 @@ export default function EmojiArt() {
         disabled={!url || !emoji || progress.length > 0}
         onClick={makeVideo}
       >
-        {progress ? `Converting ${progress}` : "📀 Generate video"}
+        {progress && !isLoading && `Converting ${progress}`}
+        {!progress && isLoading && "Generating..."}
+        {!progress && !isLoading && "📀 Generate video"}
       </Button>
+      <p className="opacity-50 text-sm">{`Conversion doesn't need internet`}</p>
       {result && !progress && (
         <>
           <video
             src={result}
             controls
             className="mx-auto w-full lg:w-96"
-            style={{ maxWidth: "500px" }}
+            autoPlay
           />
           <Button onClick={download}>Download</Button>
+          <div ref={ref} />
         </>
       )}
     </div>

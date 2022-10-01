@@ -11,6 +11,7 @@ export const generateVideo = async (
   ffmpeg: FFmpeg,
   audioUrl: string,
   setProgress: (progress: string) => void,
+  setIsLoading: (isLoading: boolean) => void,
   file?: File,
   emoji?: string
 ) => {
@@ -38,7 +39,10 @@ export const generateVideo = async (
   //   @ts-ignore
   ffmpeg.setProgress((p: Progress) => {
     step += 1;
-    if (step === 2) duration = Math.ceil(p.duration);
+    if (step === 2) {
+      duration = Math.ceil(p.duration);
+      setIsLoading(false);
+    }
     if (step > 3) {
       if (`${Math.round((p.time * 100) / duration)}%` === "NaN%")
         setProgress("");

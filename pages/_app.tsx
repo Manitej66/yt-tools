@@ -2,10 +2,13 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { FfmpegProvider } from "../context/ffmpeg";
 import Header from "../components/Header";
+import Head from "next/head";
+import Tags from "../components/Tags";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Tags />
       <div className="font-satoshi text-white">
         <Header />
         <div className="container max-w-4xl mx-auto p-4 mt-16">
