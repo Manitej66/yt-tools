@@ -46,6 +46,10 @@ export const FfmpegProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  if (loading) {
+    return <div>Please wait...</div>;
+  }
+
   return (
     <FfmpegContext.Provider
       value={{
