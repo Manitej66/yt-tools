@@ -50,9 +50,15 @@ export default async function handler(
     `
         <!DOCTYPE html>
         <html>
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+        </head>
         <style>
             body {
                 background-color: #${color};
+                font-family: 'Noto Color Emoji', sans-serif;
             }
             .container {
                 display: grid;
