@@ -16,7 +16,6 @@ export default async function handler(
     origin: "*",
     optionsSuccessStatus: 200,
   });
-  console.log(req.query);
   const { emoji, color } =
     (req.query as { emoji: string; color: string }) || "";
 
@@ -24,6 +23,9 @@ export default async function handler(
     res.status(400).json({ error: "No emoji provided" });
     return;
   }
+  await chromium.font(
+    "https://raw.githack.com/googlei18n/noto-emoji/master/fonts/NotoColorEmoji.ttf"
+  );
   // Open the browser with the right window size
   const browser = await chromium.puppeteer.launch({
     defaultViewport: { width: 300, height: 200, deviceScaleFactor: 4 },
@@ -58,7 +60,9 @@ export default async function handler(
         <style>
             body {
                 background-color: #${color};
-                font-family: 'Noto Color Emoji', sans-serif;
+            }
+            * {
+            font-family: 'Noto Color Emoji', sans-serif;
             }
             .container {
                 display: grid;
