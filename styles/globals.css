@@ -1,26 +1,30 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@tailwind base;
+@tailwind components;
 
 * {
-  box-sizing: border-box;
+  font-family: "Satoshi";
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@tailwind utilities;
+
+body {
+  background-color: #0f172a;
+}
+
+@layer base {
+  @font-face {
+    font-family: "Satoshi";
+    font-weight: 400;
+    src: url(/static/fonts/Satoshi-Regular.ttf);
   }
-  body {
-    color: white;
-    background: black;
+  @font-face {
+    font-family: "Satoshi";
+    font-weight: 500;
+    src: url(/static/fonts/Satoshi-Medium.ttf);
+  }
+  @font-face {
+    font-family: "Satoshi";
+    font-weight: 700;
+    src: url(/static/fonts/Satoshi-Bold.ttf);
   }
 }
