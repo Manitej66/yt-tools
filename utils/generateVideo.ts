@@ -73,6 +73,8 @@ export const generateVideo = async (
 
   // merge looped gif and audio into video
   if (type === "gif") {
+    // ffmpeg -stream_loop -1 -i input.gif -i audio.mp3 -shortest -c:v libx265 -crf 26 -c:a aac -q:a 4 output.mp4
+
     await ffmpeg.run(
       "-stream_loop",
       "-1",
@@ -81,6 +83,16 @@ export const generateVideo = async (
       "-i",
       "audio.mp3",
       "-shortest",
+      "-c:v",
+      "libx264",
+      "-crf",
+      "26",
+      "-c:a",
+      "aac",
+      "-q:a",
+      "4",
+      "-pix_fmt",
+      "yuv420p",
       "output.mp4"
     );
   } else {
@@ -94,6 +106,8 @@ export const generateVideo = async (
       "-i",
       "audio.mp3",
       "-shortest",
+      "-pix_fmt",
+      "yuv420p",
       "output.mp4"
     );
   }
@@ -118,6 +132,7 @@ export const generateVideo = async (
   ffmpeg.FS("unlink", "audio.mp3");
   ffmpeg.FS("unlink", "temp_audio.mp3");
   ffmpeg.FS("unlink", "output.mp4");
+  // ffmpeg.FS("unlink", "output1.mp4");
 
   return op_url;
 };
