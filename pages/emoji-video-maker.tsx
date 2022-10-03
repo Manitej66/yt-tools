@@ -13,6 +13,8 @@ export default function EmojiArt() {
   const [color, setColor] = useState("#ffffff");
   const [emoji, setEmoji] = useState("");
   const [progress, setProgress] = useState("");
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -28,6 +30,8 @@ export default function EmojiArt() {
       `${HOST_URL}/api/audio?url=${url}`,
       setProgress,
       setIsLoading,
+      startTime,
+      endTime,
       undefined,
       `${emoji}~${color.slice(1)}`
     );
@@ -62,6 +66,22 @@ export default function EmojiArt() {
         placeholder="Enter emoji(s)"
         maxLength={10}
       />
+      <div className="flex gap-4">
+        <Input
+          type="number"
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setStartTime(Number(e.target.value))
+          }
+          placeholder="Start time (seconds)"
+        />
+        <Input
+          type="number"
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setEndTime(Number(e.target.value))
+          }
+          placeholder="End time (seconds)"
+        />
+      </div>
       <p>Choose background color</p>
       <HexColorPicker color={color} onChange={setColor} />
       <Button

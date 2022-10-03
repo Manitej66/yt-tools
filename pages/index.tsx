@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import HeroCard from "../components/HeroCard";
-import { AlbumIcon, CropIcon, EmojiIcon } from "../components/icons";
+import { AlbumIcon, CropIcon, EmojiIcon, VideoIcon } from "../components/icons";
 import { RouteLinks } from "../types/RouteLinks";
 
 const Links: RouteLinks[] = [
@@ -18,6 +18,12 @@ const Links: RouteLinks[] = [
   },
   {
     id: 3,
+    name: "GIF video maker",
+    href: "/gif-video-maker",
+    icon: <VideoIcon className="w-6 h-6" />,
+  },
+  {
+    id: 4,
     name: "Status maker",
     href: "/status-maker",
     icon: <CropIcon className="w-6 h-6" />,
