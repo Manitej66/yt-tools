@@ -27,7 +27,6 @@ const Links: RouteLinks[] = [
     name: "Status maker",
     href: "/status-maker",
     icon: <CropIcon className="w-6 h-6" />,
-    disabled: true,
   },
 ];
 
